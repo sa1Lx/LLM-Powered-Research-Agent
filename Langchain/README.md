@@ -7,6 +7,8 @@ LangChain is a Python framework that helps you:
 - Retrieve useful text chunks
 - Build chains for question-answering
 
+Referenece: [Build a Retrieval Augmented Generation (RAG) App: Part 1](https://python.langchain.com/docs/tutorials/rag/)
+
 ## LangSmith 
 ### What is LangSmith? (Simple Explanation)
 
