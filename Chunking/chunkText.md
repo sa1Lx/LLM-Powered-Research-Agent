@@ -50,6 +50,23 @@ The most intuitive strategy is to split documents based on their length. This si
 👉 use .split_text() if you only care about text content
 👉 use .create_documents() if you want text + metadata in a Document wrapper
 
-### Text Structure Based Chunking
+### Recursive Character Text Splitter
 
+The Recursive Character Text Splitter is a more advanced approach that takes into account the structure of the text. It recursively splits the text into smaller chunks based on a set of predefined rules, such as paragraph boundaries, sentence boundaries, or even custom delimiters. This method is particularly useful for documents with complex structures, as it helps preserve the context and meaning of the text.
 
+Here's an example of how to use the Recursive Character Text Splitter:
+
+```python
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+# Load an example document
+with open("state_of_the_union.txt") as f:
+    state_of_the_union = f.read()
+
+text_splitter = RecursiveCharacterTextSplitter(
+    # separator=["\n\n", "\n", " ", ""] default list
+    chunk_size=1000,
+    chunk_overlap=200,
+)
+texts = text_splitter.create_documents([state_of_the_union])
+print(texts[0])
