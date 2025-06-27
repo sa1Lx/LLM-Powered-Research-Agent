@@ -1,6 +1,6 @@
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 
-    # Load an example document
+
 with open(r"E:\IITB\SoC LLM Research Agent\LLM-Powered-Research-Agent\Parsing\text.txt", "r", encoding="utf-8") as f:
         text = f.read()
 
