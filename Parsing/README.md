@@ -19,22 +19,22 @@
 
 # Loading a page from a PDF
 
-        page = doc.load_page(pno)  # loads page number 'pno' of the document (0-based)
-        page = doc[pno]  # the short form
+        page = pdf.load_page(pno)  # loads page number 'pno' of the document (0-based)
+        page = pdf[pno]  # the short form
 
-Any integer -∞ < pno < page_count is possible here. Negative numbers count backwards from the end, so doc[-1] is the last page, like with Python sequences.
+Any integer -∞ < pno < page_count is possible here. Negative numbers count backwards from the end, so pdf[-1] is the last page, like with Python sequences.
 
 Some more advanced way would be using the document as an iterator over its pages:
 
-        for page in doc:
+        for page in pdf:
             # do something with 'page'
 
         # ... or read backwards
-        for page in reversed(doc):
+        for page in reversed(pdf):
             # do something with 'page'
 
         # ... or even use 'slicing'
-        for page in doc.pages(start, stop, step):
+        for page in pdf.pages(start, stop, step):
             # do something with 'page'
 
 ## Inspecting the Links
@@ -61,7 +61,7 @@ You can also use an iterator which emits one link at a time:
 
         text = page.get_text(opt)
 
-Use one of the following strings for opt to obtain different formats [2]:
+Use one of the following strings for opt to obtain different formats:
 
 1. “text”: (default) plain text with line breaks. No formatting, no text position details, no images.
 
