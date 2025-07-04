@@ -1,12 +1,14 @@
 # Opening a pdf and getting some details
 
+Note: Old versions of PyMuPDF had their Python import name as `fitz`. Newer versions use `pymupdf` instead, and offer `fitz` as a fallback so that old code will still work.
+
 1. `pip install PyMuPDF` # Install the PyMuPDF library
 
 2. `import fitz` # Import the PyMuPDF library
 
 3. `print(fitz.__doc__)` # Print the documentation of PyMuPDF
 
-4. `pdf = fitz.open(‘a.pdf’)` # Open a PDF file named 'a.pdf'
+4. `pdf = fitz.open(‘a.pdf’)` # This creates the Document object doc. filename must be a Python string (or a pathlib.Path) specifying the name of an existing file.
 
 5. `print(pdf.page_count)` # Print the number of pages in the PDF
 
@@ -84,4 +86,6 @@ Use one of the following strings for opt to obtain different formats:
         areas = page.search_for("mupdf")
 
 This delivers a list of rectangles (see [Rect](https://pymupdf.readthedocs.io/en/latest/rect.html#rect)), each of which surrounds one occurrence of the string “mupdf” (case insensitive).
+
+More on PyMuPDF [here]()
 

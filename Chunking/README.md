@@ -70,3 +70,5 @@ text_splitter = RecursiveCharacterTextSplitter(
 )
 texts = text_splitter.create_documents([state_of_the_union])
 print(texts[0])
+```
+
