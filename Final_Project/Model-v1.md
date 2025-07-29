@@ -367,9 +367,24 @@ def main():
         
         # Display current paper info
         if st.session_state.current_paper:
-            st.subheader("Current Paper")
-            st.info(f"📄 {st.session_state.current_paper['name']}")
-            st.caption(f"Uploaded: {st.session_state.current_paper['upload_time']}")
+            paper_ids = list(st.session_state.papers_db.keys())  # Get list of all paper IDs
+
+            # Create a list of paper names, corresponding one-to-one to the IDs
+            paper_names = [st.session_state.papers_db[pid]["name"] for pid in paper_ids]
+
+            # Display a radio button selector with the paper names
+            selected_name = st.radio(
+                "Select a paper to interact with:",
+                paper_names
+            )
+
+            # Find the paper ID that corresponds to the chosen paper's name
+            selected_paper_id = paper_ids[paper_names.index(selected_name)]
+
+            # Update session state to track the chosen paper
+            st.session_state.current_paper_id = selected_paper_id
+            st.session_state.current_paper = st.session_state.papers_db[selected_paper_id]
+            st.write(f"**Current Paper:** {st.session_state.current_paper['name']}")  
         
         # Display all papers
         if st.session_state.papers_db:
@@ -383,9 +398,15 @@ def main():
     ])
     
     with tab1:
-        st.header("Ask Moist Anything!")
+        cols = st.columns([7, 1])    # Left (header) wide, right (button) narrow
+        with cols[0]:
+            st.header("Ask Moist Anything!")
+        with cols[1]:
+            if st.session_state.chat_history:  # Only show when there is history
+                if st.button("🗑️ Clear", key="clear_chat", help="Clear chat history"):
+                    st.session_state.chat_history = []
+                    st.rerun()  # Refresh UI
         
-        # Display chat history
         for message in st.session_state.chat_history:
             with st.chat_message(message["role"]):
                 st.write(message["content"])
@@ -416,9 +437,17 @@ def main():
                         
                         # Add AI response to chat history
                         st.session_state.chat_history.append({"role": "assistant", "content": answer})
+                st.rerun()
     
     with tab2:
-        st.header("Smart Paper Summarizer")
+        cols = st.columns([7, 1])
+        with cols[0]:
+            st.header("Smart Paper Summarizer")
+        with cols[1]:
+            if SummarizerState in st.session_state:
+                if st.button("🗑️ Clear", key="clear_summary", help="Clear summary result"):
+                    st.session_state.pop(SummarizerState, None)
+                    st.rerun()
         
         if st.session_state.current_paper is None:
             st.warning("Please upload a paper first!")
@@ -442,7 +471,14 @@ def main():
                                 st.write(content)
     
     with tab3:
-        st.header("Literature Comparator")
+        cols = st.columns([7, 1])
+        with cols[0]:
+            st.header("Literature Comparator")
+        with cols[1]:
+            if ComparatorState in st.session_state:  # Replace with comparison state if any
+                if st.button("🗑️ Clear", key="clear_comparison", help="Clear comparison result"):
+                    st.session_state.pop(ComparatorState, None)
+                    st.rerun()
         
         if len(st.session_state.papers_db) < 2:
             st.warning("Upload at least 2 papers to compare!")
@@ -473,7 +509,7 @@ def main():
                     })
                     
                     st.subheader("📊 Paper Comparison")
-                    st.write(result["final_comparison"])
+                    st.write(result["final_comparison"])  
 
 if __name__ == "__main__":
     # Check for required environment variables
@@ -481,5 +517,5 @@ if __name__ == "__main__":
         st.error("Please set your GROQ_API_KEY in the project.env file!")
         st.stop()
     
-    main()
+main()
 ```
