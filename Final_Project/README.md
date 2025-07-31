@@ -30,3 +30,20 @@ Note: Assumes the abstract is within the first 3000 characters of the paper (for
 * Streamlit UI: Tabbed interface for different agent functions
 * Session State: Maintains chat history and paper database
 * Error Handling: Comprehensive error handling throughout
+
+# How it Works
+
+1. **PDF Upload**: Users upload research papers in PDF format.
+2. **Processing**: Papers are processed to extract text and metadata.
+3. **Similarity Search**: Uploaded papers are indexed in a FAISS vector store and according to user queries, relevant chunks are retrieved.
+4. **Chat Interface**: Users can interact with the system to ask questions related to paper's scope (only).
+
+![image](images/image1.png)
+
+5. **Summarizer**: Users can request summary of the entire paper. Also allows to view section-wise summaries, namely, "Abstract", "Methods", and "Results".
+
+![image](images/image2.png)
+
+6. **Comparator**: Users can compare multiple papers side-by-side across key dimensions.
+
+![image](images/image3.png)
